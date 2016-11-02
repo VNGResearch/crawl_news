@@ -1,2 +1,2 @@
 # crawl_news
-Crawl news as a Vietnamese corpor
+Crawl news as a Vietnamese corpora
