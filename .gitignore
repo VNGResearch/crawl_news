@@ -1,6 +1,8 @@
 #Thanh
 *.tsv
+backup/
 data/
+*.log
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

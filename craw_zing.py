@@ -13,8 +13,8 @@ store_file = ''
 url = ''
 
 crawled_page = 0
-#limited_page_number = 17000
-limited_page_number = 17
+limited_page_number = 17000
+#limited_page_number = 17
 total_page = 0
 count_page = 0
 
@@ -41,7 +41,8 @@ class ZingSpider(scrapy.Spider):
             yield scrapy.Request(res.urljoin(link), callback=self.parse_news)
 
         self.next_page = res.css('p.more a::attr(href)').extract_first()
-        self.next_page = res.urljoin(self.next_page)
+        if self.next_page is not None:
+            self.next_page = res.urljoin(self.next_page)
         
 
     def parse_news(self, res):#news page
@@ -64,7 +65,7 @@ class ZingSpider(scrapy.Spider):
             if count_page==total_page:
                 self.write_file()
                 crawled_page += total_page
-                if crawled_page < limited_page_number:
+                if crawled_page < limited_page_number and self.next_page is not None:
                     #process next page until get more than limited page number
                     self.pages = []
                     yield scrapy.Request(self.next_page, callback=self.parse)
@@ -74,6 +75,7 @@ class ZingSpider(scrapy.Spider):
             lock.release()
 
     def write_file(self):
+        print('#save to file')
         with open(store_file, 'a') as f:
             f.write('\n'.join(self.pages))
             f.write('\n')
