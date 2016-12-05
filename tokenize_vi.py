@@ -13,7 +13,6 @@ for filename in glob.iglob(dir_in + '*.tsv'):
         with open(os.path.join(dir_out, corpus), 'w') as fw: 
             for doc in f:
                 if doc.strip() == '':
-                    pdb.set_trace()
                     continue
                 paths = doc.split('\t')
                 for i, path in enumerate(paths[1:]):
